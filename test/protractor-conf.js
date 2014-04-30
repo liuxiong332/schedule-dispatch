@@ -13,6 +13,8 @@ exports.config = {
 
   framework: 'jasmine',
 
+  chromeOnly: true,
+
   jasmineNodeOpts: {
     defaultTimeoutInterval: 30000
   }
