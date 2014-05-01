@@ -2,18 +2,41 @@
 <html lang="en" ng-app="myApp">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My AngularJS App</title>
+  <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
   <link rel="stylesheet" href="css/app.css"/>
 </head>
-<body>
-  <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
-  </ul>
+<body ng-controller="logupControl">
+  <nav class="navbar navbar-inverse" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+          <span class="sr-only">菜单</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+    </div>
+      <div class="collapse navbar-collapse" id="navbar-menu">
+        <ul class="nav navbar-nav">
+          <li ng-class="{active:isLoginActive}" ng-click="onMenuClick()" id="loginLink"><a href="#/login">注册</a></li>
+          <li ng-class="{active:isLogupActive}" ng-click="onMenuClick()" id="logupLink"><a href="#/logup">登录</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Schedule Dispatch</h1>
+      <p>一款管理你的时间任务计划的软件。</p>
+      <p>你是行动派吗？如果你是，赶紧使用吧，从现在开始规划自己的人生！</p>
+    </div>
   <div ng-view></div>
 
-  <div>Angular seed app: v<span app-version></span></div>
+  </div>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
@@ -25,5 +48,7 @@
   <script src="js/controllers.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/directives.js"></script>
+  <script src="../bower_components/jquery/jquery.js"></script>
+  <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
 </body>
 </html>

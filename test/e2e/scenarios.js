@@ -6,22 +6,35 @@ describe('my app', function() {
 
   browser.get('index.html');
 
-  it('should automatically redirect to /view1 when location hash/fragment is empty', function() {
-    expect(browser.getLocationAbsUrl()).toMatch("/view1");
+  it('should automatically redirect to /login when location hash/fragment is empty', function() {
+    expect(browser.getLocationAbsUrl()).toMatch("/login");
   });
 
+  it('should active the specific link when click the link(login,logup)', function() {
+    var loginLink = element(by.css('#loginLink'));
+    var logupLink = element(by.css('#logupLink'));
+    //the login link has active class
+    expect(loginLink.getAttribute('class')).toBe('active');
+    expect(logupLink.getAttribute('class')).toBe('');
+    //when click the logup link, then the logup link get the active class
+    logupLink.click();
+    expect(loginLink.getAttribute('class')).toBe('');
+    expect(logupLink.getAttribute('class')).toBe('active');
+  });
 
-  describe('view1', function() {
+  describe('login', function() {
 
     beforeEach(function() {
-      browser.get('index.html#/view1');
+      browser.get('index.html#/login');
     });
 
-
-    it('should render view1 when user navigates to /view1', function() {
-      expect(element.all(by.css('[ng-view] p')).first().getText()).
-        toMatch(/partial for view 1/);
+    it('should render login when user navigates to /login', function() {
+      expect(element(by.css('[ng-view] :first-child')).isPresent()).toBe(true);
     });
+
+    it('should active the login link when click the login link', function() {
+      expect()
+    })
 
   });
 
@@ -29,13 +42,12 @@ describe('my app', function() {
   describe('view2', function() {
 
     beforeEach(function() {
-      browser.get('index.html#/view2');
+      browser.get('index.html#/logup');
     });
 
 
-    it('should render view2 when user navigates to /view2', function() {
-      expect(element.all(by.css('[ng-view] p')).first().getText()).
-        toMatch(/partial for view 2/);
+    it('should render longup-page when user navigates to /view2', function() {
+      expect(element(by.css('[ng-view] :first-child')).isPresent()).toBe(true);
     });
 
   });

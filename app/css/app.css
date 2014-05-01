@@ -28,3 +28,7 @@
   content: "";
   padding: 0;
 }
+
+.jumbotron {
+  background-color: #a9e;
+}

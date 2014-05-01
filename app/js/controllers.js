@@ -3,9 +3,12 @@
 /* Controllers */
 
 angular.module('myApp.controllers', [])
-  .controller('MyCtrl1', [function() {
-
-  }])
-  .controller('MyCtrl2', [function() {
-
+  .controller('logupControl', ['$scope', function($scope) {
+    $scope.isLoginActive = true;
+    $scope.isLogupActive = false;
+    //when click the login and logup button invoked
+    $scope.onMenuClick = function() {
+      $scope.isLoginActive = !$scope.isLoginActive;
+      $scope.isLogupActive = !$scope.isLogupActive;
+    };
   }]);
