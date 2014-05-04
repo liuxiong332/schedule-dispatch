@@ -13,6 +13,6 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/signin', {templateUrl: 'partials/signin-page.html',
     controller: 'identifyControl'});
   $routeProvider.when('/signup', {templateUrl: 'partials/signup-page.html',
-    controller: 'signupControl'});
+    controller: 'identifyControl'});
   $routeProvider.otherwise({redirectTo: '/signin'});
 }]);

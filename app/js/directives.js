@@ -9,20 +9,21 @@ angular.module('myApp.directives', []).
       elm.text(version);
     };
   }]).
-  directive('passwordSame', function() {
-  return {
-    require: 'ngModel',
-    link: function(scope, elm, attrs, ctrl) {
-      ctrl.$parsers.unshift(function(viewValue) {
-        if(scope.asswordVerify === scope.password) {
-          ctrl.$setValidity('passwordSame', true);
-          return viewValue;
-        } else {
-          // it is invalid, return undefined (no model update)
-          ctrl.$setValidity('passwordSame', false);
-          return undefined;
+  directive('passwordVerify', function() {
+    return {
+      require: 'ngModel',
+      link: function(scope, elm, attrs, ctrl) {
+        function Validate() {
+          if(!scope.passwordVerification || !scope.password ||
+            scope.passwordVerification === scope.password) {
+            ctrl.$setValidity('passwordVerify', true);
+          } else {
+            ctrl.$setValidity('passwordVerify', false);
+          }
         }
-      });
-    }
-  };
+
+        scope.$watch('password', Validate);
+        scope.$watch('passwordVerification', Validate);
+      }
+    };
   });
