@@ -7,7 +7,7 @@ describe('my app', function() {
   browser.get('index.html');
 
   it('should automatically redirect to /login when location hash/fragment is empty', function() {
-    expect(browser.getLocationAbsUrl()).toMatch("/login");
+    expect(browser.getLocationAbsUrl()).toMatch("/signin");
   });
 
   it('should active the specific link when click the link(login,logup)', function() {
@@ -25,7 +25,7 @@ describe('my app', function() {
   describe('login', function() {
 
     beforeEach(function() {
-      browser.get('index.html#/login');
+      browser.get('index.html#/signin');
     });
 
     it('should render login when user navigates to /login', function() {
@@ -42,7 +42,7 @@ describe('my app', function() {
   describe('view2', function() {
 
     beforeEach(function() {
-      browser.get('index.html#/logup');
+      browser.get('index.html#/signup');
     });
 
 

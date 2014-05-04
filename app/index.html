@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
   <link rel="stylesheet" href="css/app.css"/>
 </head>
-<body ng-controller="logupControl">
+<body ng-controller="identifyControl">
   <nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -21,8 +21,8 @@
     </div>
       <div class="collapse navbar-collapse" id="navbar-menu">
         <ul class="nav navbar-nav">
-          <li ng-class="{active:isLogupActive}" ng-click="onMenuClick()" id="logupLink" ng-show="!isUserExists"><a href="#/logup">注册</a></li>
-          <li ng-class="{active:isLoginActive}" ng-click="onMenuClick()" id="loginLink" ng-show="!isUserExists"><a href="#/login">登录</a></li>
+          <li ng-class="{active:isSignupActive}" ng-click="onMenuClick()" id="logupLink" ng-show="!isUserExists"><a href="#/signup">注册</a></li>
+          <li ng-class="{active:isSigninActive}" ng-click="onMenuClick()" id="loginLink" ng-show="!isUserExists"><a href="#/signin">登录</a></li>
           <li class="navbar-text" ng-show="isUserExists" ng-model="userName"></li>
           <li class="active" ng-show="isUserExists"><a href="#">登出</a></li>
         </ul>

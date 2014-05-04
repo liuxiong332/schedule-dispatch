@@ -10,7 +10,9 @@ angular.module('myApp', [
   'myApp.controllers'
 ]).
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/login', {templateUrl: 'partials/login-page.html', controller: 'MyCtrl1'});
-  $routeProvider.when('/logup', {templateUrl: 'partials/logup-page.html', controller: 'MyCtrl2'});
-  $routeProvider.otherwise({redirectTo: '/login'});
+  $routeProvider.when('/signin', {templateUrl: 'partials/signin-page.html',
+    controller: 'identifyControl'});
+  $routeProvider.when('/signup', {templateUrl: 'partials/signup-page.html',
+    controller: 'signupControl'});
+  $routeProvider.otherwise({redirectTo: '/signin'});
 }]);

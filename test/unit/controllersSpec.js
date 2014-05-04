@@ -3,21 +3,41 @@
 /* jasmine specs for controllers go here */
 
 describe('controllers', function(){
-  beforeEach(module('ngCookies'));
-  beforeEach(angular.mock.module('myApp.controllers'));
+  beforeEach(module('myApp.controllers'));
 
   it('should active the specific menu item', inject(
-    function($httpBackend, $cookies, $controller) {
+    function($controller) {
     var scope = {};
-    var myCtrl1 = $controller('logupControl',
-      {$scope: scope});
+    var cookies = {};
+    var myCtrl1 = $controller('identifyControl',
+      {$scope: scope, $cookies: cookies});
     expect(myCtrl1).toBeDefined();
-    scope.onMenuClick();
-    expect(scope.isLoginActive).toBe(false);
-    expect(scope.isLogupActive).toBe(true);
+
+    expect(scope.isSigninActive).toBe(true);
+    expect(scope.isSignupActive).toBe(false);
 
     scope.onMenuClick();
-    expect(scope.isLoginActive).toBe(true);
-    expect(scope.isLogupActive).toBe(false);
+    expect(scope.isSigninActive).toBe(false);
+    expect(scope.isSignupActive).toBe(true);
+
+    scope.onMenuClick();
+    expect(scope.isSigninActive).toBe(true);
+    expect(scope.isSignupActive).toBe(false);
+  }));
+
+  it('should get the userName', inject(function($controller) {
+    var scope = {};
+    var logupControl = $controller('identifyControl',
+      {$scope: scope, $cookies: {}});
+
+    expect(scope.userName).toBeFalsy();
+    expect(scope.isUserExists).toBe(false);
+
+    var USER_NAME = "good";
+    var cookies = {userName: USER_NAME};
+    logupControl = $controller('identifyControl',
+      {$scope: scope, $cookies:cookies});
+    expect(scope.userName).toMatch(USER_NAME);
+    expect(scope.isUserExists).toBe(true);
   }));
 });

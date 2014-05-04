@@ -3,24 +3,20 @@
 /* Controllers */
 
 angular.module('myApp.controllers', ['ngCookies'])
-  .controller('logupControl', ['$scope','$cookies','$http',
+  .controller('identifyControl', ['$scope','$cookies',
    function($scope,$cookies,$http) {
-    $scope.isLoginActive = true;
-    $scope.isLogupActive = false;
+    $scope.isSigninActive = true;
+    $scope.isSignupActive = false;
     //get the userName from the cookie
     $scope.userName = $cookies.userName;
     $scope.isUserExists = !!$cookies.userName;
 
     //when click the login and logup button invoked
     $scope.onMenuClick = function() {
-      $scope.isLoginActive = !$scope.isLoginActive;
-      $scope.isLogupActive = !$scope.isLogupActive;
+      $scope.isSigninActive = !$scope.isSigninActive;
+      $scope.isSignupActive = !$scope.isSignupActive;
     };
-    // $scope.onLogin = function() {
-    //   $http.post('/login',{userName:})
-    // };
-    // $scope.onLogup = function() {
-    //   onMenuClick();
-    // };
-
+  }])
+  .controller('signupControl', ['$scope', function($scope) {
+    $scope.user = {};
   }]);
