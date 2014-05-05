@@ -2,7 +2,7 @@
   <div class="form-group">
     <label for="inputEmail">注册邮箱</label>
     <span ng-show="form.email.$error.required" class="label label-danger">必须</span>
-    <input type="email" name="email" class="form-control" id="inputEmail" placeholder="输入注册邮箱" ng-model="userName" required>
+    <input type="email" name="email" class="form-control" id="inputEmail" placeholder="输入注册邮箱" ng-model="email" required>
   </div>
   <div class="alert alert-danger" ng-show="form.email.$error.email">无效的邮箱地址
   </div>
@@ -21,5 +21,6 @@
   <div class="alert alert-warning" ng-show="form.verifyPassword.$error.passwordVerify">
     两次输入密码不一致
   </div>
-  <input type="submit" class="btn btn-primary" value="注册"></input>
+  <div class="alert alert-danger" ng-show="!isUserAvailable">用户名已经被注册，请选择其他用户名</div>
+  <input type="submit" class="btn btn-primary" value="注册" button-disable="form.$invalid"></input>
 </form>

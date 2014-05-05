@@ -36,4 +36,17 @@ angular.module('myApp.directives', []).
         });
       }
     };
-  }]);
+  }]).
+  directive('buttonDisable', function() {
+    return {
+      link: function(scope, elem, attrs) {
+        scope.$watch(attrs.buttonDisable, function(newValue) {
+          if(newValue) {
+            elem.attr('disabled', 'disabled');
+          } else {
+            elem.removeAttr('disabled');
+          }
+        });
+      }
+    }
+  });
