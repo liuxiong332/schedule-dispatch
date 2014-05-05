@@ -18,7 +18,7 @@
     <span ng-show="form.verifyPassword.$error.required" class="label label-danger">必须</span>
     <input type="password" name="verifyPassword" class="form-control" id="inputVerifyPassword" placeholder="再次输入密码" ng-model="passwordVerification" required password-verify>
   </div>
-  <div class="alert alert-warning" ng-show="form.verifyPassword.$error.passwordVerify ">
+  <div class="alert alert-warning" ng-show="form.verifyPassword.$error.passwordVerify">
     两次输入密码不一致
   </div>
   <input type="submit" class="btn btn-primary" value="注册"></input>

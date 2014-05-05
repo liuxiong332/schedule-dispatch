@@ -5,39 +5,47 @@
 describe('controllers', function(){
   beforeEach(module('myApp.controllers'));
 
-  it('should active the specific menu item', inject(
-    function($controller) {
-    var scope = {};
-    var cookies = {};
-    var myCtrl1 = $controller('identifyControl',
-      {$scope: scope, $cookies: cookies});
-    expect(myCtrl1).toBeDefined();
+  describe('identifyControl ', function() {
+    var scope, cookies ;
+    var signinUrl, signupUrl;
+    var getController;
 
-    expect(scope.isSigninActive).toBe(true);
-    expect(scope.isSignupActive).toBe(false);
+    //init the mock variables
+    beforeEach( inject( function($controller, _signinUrl_, _signupUrl_) {
+      scope = cookies = {};
+      signinUrl = _signinUrl_;
+      signupUrl = _signupUrl_;
+      getController = function() {
+        return $controller('identifyControl',
+          {$scope: scope, $cookies: cookies});
+      };
+    }));
 
-    scope.onMenuClick();
-    expect(scope.isSigninActive).toBe(false);
-    expect(scope.isSignupActive).toBe(true);
+    it('should active the specific menu item', function() {
+      //get the identify Controller
+      var identifyControl = getController();
+      expect(identifyControl).toBeDefined();
 
-    scope.onMenuClick();
-    expect(scope.isSigninActive).toBe(true);
-    expect(scope.isSignupActive).toBe(false);
-  }));
+      scope.onRouteChange(signinUrl);
+      expect(scope.isSigninActive).toBe(true);
+      expect(scope.isSignupActive).toBe(false);
 
-  it('should get the userName', inject(function($controller) {
-    var scope = {};
-    var logupControl = $controller('identifyControl',
-      {$scope: scope, $cookies: {}});
+      scope.onRouteChange(signupUrl);
+      expect(scope.isSigninActive).toBe(false);
+      expect(scope.isSignupActive).toBe(true);
+    });
 
-    expect(scope.userName).toBeFalsy();
-    expect(scope.isUserExists).toBe(false);
+    it('should get the userName', function() {
+      getController();
+      expect(scope.userName).toBeFalsy();
+      expect(scope.isUserExists).toBe(false);
 
-    var USER_NAME = "good";
-    var cookies = {userName: USER_NAME};
-    logupControl = $controller('identifyControl',
-      {$scope: scope, $cookies:cookies});
-    expect(scope.userName).toMatch(USER_NAME);
-    expect(scope.isUserExists).toBe(true);
-  }));
+      //set the user name of cookie
+      var USER_NAME = "good";
+      cookies = {userName: USER_NAME};
+      getController();
+      expect(scope.userName).toMatch(USER_NAME);
+      expect(scope.isUserExists).toBe(true);
+    });
+  });
 });

@@ -26,4 +26,14 @@ angular.module('myApp.directives', []).
         scope.$watch('passwordVerification', Validate);
       }
     };
-  });
+  }).
+  directive('onRoutechange', ['$route', function($route) {
+    return {
+      link: function(scope, elem, attrs) {
+        scope.$on('$routeChangeSuccess', function onRouteChange() {
+          scope.$eval(attrs.onRoutechange,
+            {url: $route.current.originalPath});
+        });
+      }
+    };
+  }]);

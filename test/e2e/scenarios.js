@@ -22,7 +22,7 @@ describe('my app', function() {
     expect(logupLink.getAttribute('class')).toBe('active');
   });
 
-  describe('login', function() {
+  describe('signin', function() {
 
     beforeEach(function() {
       browser.get('index.html#/signin');
@@ -39,16 +39,93 @@ describe('my app', function() {
   });
 
 
-  describe('view2', function() {
-
+  describe('signup', function() {
     beforeEach(function() {
       browser.get('index.html#/signup');
     });
 
-
-    it('should render longup-page when user navigates to /view2', function() {
+    it('should render longup-page when user navigates to /signup', function() {
       expect(element(by.css('[ng-view] :first-child')).isPresent()).toBe(true);
     });
 
+    it('email should behave properly', function() {
+      var emailRequireAlert = $('[ng-show="form.email.$error.required"]');
+
+      var emailErrorAlert = $('.alert-danger[ng-show*="$error.email"]');
+
+      expect(emailRequireAlert.isDisplayed()).toBe(true);
+      expect(emailErrorAlert.isDisplayed()).toBe(false);
+
+      var INVALID_EMAIL_ADDR = "123";
+      $('#inputEmail').sendKeys(INVALID_EMAIL_ADDR);
+      expect(emailRequireAlert.isDisplayed()).toBe(false);
+      expect(emailErrorAlert.isDisplayed()).toBe(true);
+
+      var EMAIL_ADDR = "123@152.com";
+      $('#inputEmail').sendKeys(EMAIL_ADDR);
+      expect(emailRequireAlert.isDisplayed()).toBe(false);
+      expect(emailErrorAlert.isDisplayed()).toBe(false);
+    });
+
+    it('password should behave properly', function() {
+      var passwordRequireAlert = $('[ng-show="form.password.$error.required"]');
+      expect(passwordRequireAlert.isDisplayed()).toBe(true);
+
+      var PASSWORD = "123";
+      $('#inputPassword').sendKeys(PASSWORD);
+      expect(passwordRequireAlert.isDisplayed()).toBe(false);
+    });
+
+    it('passwordVerify should require', function() {
+      var passwordVerifyRequire =
+        $('[ng-show="form.verifyPassword.$error.required"]');
+      expect(passwordVerifyRequire.isDisplayed()).toBe(true);
+
+      $('#inputVerifyPassword').sendKeys("123");
+      expect(passwordVerifyRequire.isDisplayed()).toBe(false);
+    });
+
+    it('password should same as passwordVerify', function() {
+      var passwordVerifyAlert = $('[ng-show*="$error.passwordVerify"]');
+      var passwordInput = $('#inputPassword');
+      var passwordVerifyInput = $('#inputVerifyPassword');
+
+      function  setPasswordVerify(str) {
+        passwordVerifyInput.clear();
+        passwordVerifyInput.sendKeys(str);
+      }
+
+      function setPassword(str) {
+        passwordInput.clear();
+        passwordInput.sendKeys(str);
+      }
+
+      //if one input don't input anything, then alert don't show
+      expect(passwordVerifyAlert.isDisplayed()).toBe(false);
+      setPassword('123');
+      expect(passwordVerifyAlert.isDisplayed()).toBe(false);
+
+      passwordInput.clear();
+      setPasswordVerify('123');
+      expect(passwordVerifyAlert.isDisplayed()).toBe(false);
+
+      //when password don't match, then the alert shows
+      setPassword('123');
+      setPasswordVerify('456');
+      expect(passwordVerifyAlert.isDisplayed()).toBe(true);
+
+      setPassword('123456');
+      setPasswordVerify('123456');
+      expect(passwordVerifyAlert.isDisplayed()).toBe(false);
+
+      setPassword('123');
+      expect(passwordVerifyAlert.isDisplayed()).toBe(true);
+
+      setPasswordVerify('123');
+      expect(passwordVerifyAlert.isDisplayed()).toBe(false);
+
+      setPasswordVerify('123455');
+      expect(passwordVerifyAlert.isDisplayed()).toBe(true);
+    });
   });
 });

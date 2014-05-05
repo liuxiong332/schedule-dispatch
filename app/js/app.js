@@ -5,14 +5,16 @@
 angular.module('myApp', [
   'ngRoute',
   'myApp.filters',
+  'myApp.constants',
   'myApp.services',
   'myApp.directives',
   'myApp.controllers'
 ]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/signin', {templateUrl: 'partials/signin-page.html',
-    controller: 'identifyControl'});
-  $routeProvider.when('/signup', {templateUrl: 'partials/signup-page.html',
-    controller: 'identifyControl'});
-  $routeProvider.otherwise({redirectTo: '/signin'});
+config(['$routeProvider', 'signinUrl', 'signupUrl',
+  function($routeProvider, signinUrl, signupUrl) {
+  $routeProvider.when(signinUrl, {templateUrl: 'partials/signin-page.html',
+    controller: 'signinControl'});
+  $routeProvider.when(signupUrl, {templateUrl: 'partials/signup-page.html',
+    controller: 'signupControl'});
+  $routeProvider.otherwise({redirectTo: signinUrl});
 }]);
