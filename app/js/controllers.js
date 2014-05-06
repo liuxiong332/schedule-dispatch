@@ -20,17 +20,15 @@ angular.module('myApp.controllers', ['ngCookies', 'myApp.constants', 'ngRoute'])
       }
     };
   }])
-  .controller('signupControl', ['$scope', 'http', function($scope, $http) {
+  .controller('signupControl', ['$scope', '$http',
+  function($scope, $http) {
     $scope.isUserAvailable = true;
     $scope.onSignup = function() {
       var userInfo = {email: $scope.email, password: $scope.password };
       $http.post('/signup', userInfo).success( function(data) {
         $scope.isUserAvailable = data.isUserAvailable;
-        if(data.isUserAvailable) {
-
-        }
       });
-    }
+    };
   }])
   .controller('signinControl', ['$scope', '$http', function($scope, $http) {
     $scope.isUserCorrect = true;
@@ -43,8 +41,9 @@ angular.module('myApp.controllers', ['ngCookies', 'myApp.constants', 'ngRoute'])
         } else if(!data.isUserCorrect) {
           $scope.isUserExists = true;
           $scope.isUserCorrect = false;
+        } else {
+          $scope.isUserExists = $scope.isUserCorrect = true;
         }
       });
     };
-
   }]);

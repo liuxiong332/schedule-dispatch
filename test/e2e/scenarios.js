@@ -32,10 +32,6 @@ describe('my app', function() {
       expect(element(by.css('[ng-view] :first-child')).isPresent()).toBe(true);
     });
 
-    it('should active the login link when click the login link', function() {
-      expect()
-    })
-
   });
 
 

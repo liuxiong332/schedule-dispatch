@@ -12,6 +12,9 @@ module.exports = function(config){
       'test/unit/**/*.js'
     ],
 
+    // list of files to exclude
+    exclude : ['app/js/e2e-mocks.js'],
+
     autoWatch : true,
 
     frameworks: ['jasmine'],
