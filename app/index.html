@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="en" ng-app="myApp">
+<!--in production-->
+<!-- <html lang="en" ng-app="myApp">-->
+<!--in debug mode-->
+<html lang="en" ng-app="myAppDev">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,7 +54,12 @@
   <script src="js/controllers.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/directives.js"></script>
+
   <script src="../bower_components/jquery/dist/jquery.js"></script>
   <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+  <!-- the js files for For e2e test, in the produnction, these files should remove -->
+  <script src="../bower_components/angular-mocks/angular-mocks.js"></script>
+  <script src="js/e2e-mocks.js"></script>
 </body>
 </html>

@@ -53,13 +53,10 @@ describe('controllers', function(){
 
     it('when user signup, post the signup request',
       inject(function($controller, $httpBackend, testUser) {
-        var responseData = {isUserAvailable: true};
-        var responseFalseData = {isUserAvailable: false};
-
         $httpBackend.whenPOST('/signup', testUser.validSignup)
-          .respond(responseData);
+          .respond(testUser.validSignupRespond);
         $httpBackend.whenPOST('/signup', testUser.invalidSignup)
-          .respond(responseFalseData);
+          .respond(testUser.invalidSignupRespond);
 
         var scope = {};
         $controller('signupControl', {'$scope': scope});
@@ -79,42 +76,37 @@ describe('controllers', function(){
 
       }));
 
-      // it('when user signin, should post the correct email and password',
-      //   inject(function($controller, $httpBackend) {
-      //     var userNotExistsResponse = {isUserExists: false};
-      //     var userNotCorrectResponse =
-      //       {isUserExists: true, isUserCorrect: false};
-      //     var userCorrectResponse =
-      //       {isUserExists: true, isUserCorrect: true};
+      it('when user signin, should post the correct email and password',
+        inject(function($controller, $httpBackend, testUser) {
 
-      //     var notCorrectData = {email:EMAIL, password:EMPTY_STR};
-      //     $httpBackend.whenPOST('/signin', userData)
-      //       .respond(userCorrectResponse);
-      //     $httpBackend.whenPOST('/signin', notCorrectData)
-      //       .respond(userNotCorrectResponse);
-      //     $httpBackend.whenPOST('/signin', userFalseData)
-      //       .respond(userNotExistsResponse);
+          $httpBackend.whenPOST('/signin', testUser.validSignin)
+            .respond(testUser.validSigninRespond);
+          $httpBackend.whenPOST('/signin', testUser.notMatchSignin)
+            .respond(testUser.notMatchSigninRespond);
+          $httpBackend.whenPOST('/signin', testUser.notExistsSignin)
+            .respond(testUser.notExistsSigninRespond);
 
-      //     var scope = {};
-      //     $controller('signinControl', {$scope: scope});
-      //     scope.email = scope.password = EMPTY_STR;
-      //     scope.onSignin();
-      //     $httpBackend.flush();
-      //     expect(scope.isUserExists).toBe(false);
+          var scope = {};
+          $controller('signinControl', {$scope: scope});
+          scope.email = testUser.notExistsSignin.email;
+          scope.password = testUser.notExistsSignin.password;
+          scope.onSignin();
+          $httpBackend.flush();
+          expect(scope.isUserExists).toBe(false);
 
-      //     scope.email = EMAIL;
-      //     scope.password = EMPTY_STR;
-      //     scope.onSignin();
-      //     $httpBackend.flush();
-      //     expect(scope.isUserExists).toBe(true);
-      //     expect(scope.isUserCorrect).toBe(false);
+          scope.email = testUser.notMatchSignin.email;
+          scope.password = testUser.notMatchSignin.password;
+          scope.onSignin();
+          $httpBackend.flush();
+          expect(scope.isUserExists).toBe(true);
+          expect(scope.isUserCorrect).toBe(false);
 
-      //     scope.email = EMAIL;
-      //     scope.password = PASSWORD;
-      //     scope.onSignin();
-      //     $httpBackend.flush();
-      //     expect(scope.isUserCorrect).toBe(true);
-      // }));
+          scope.email = testUser.validSignin.email;
+          scope.password = testUser.validSignin.password;
+          scope.onSignin();
+          $httpBackend.flush();
+          expect(scope.isUserCorrect).toBe(true);
+      }));
   });
 
 });
