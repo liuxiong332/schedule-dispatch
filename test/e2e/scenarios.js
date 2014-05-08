@@ -7,29 +7,26 @@ describe('my app', function() {
   browser.get('index.html');
 
   it('should automatically redirect to /login when location hash/fragment is empty', function() {
-    expect(browser.getLocationAbsUrl()).toMatch("/signin");
+    expect(browser.getLocationAbsUrl()).toMatch("/");
   });
 
   it('should active the specific link when click the link(login,logup)', function() {
-    var loginLink = element(by.css('#loginLink'));
-    var logupLink = element(by.css('#logupLink'));
+    var loginLink = $('#loginLink');
+    var logupLink = $('#logupLink');
     //the login link has active class
-    expect(loginLink.getAttribute('class')).toBe('active');
-    expect(logupLink.getAttribute('class')).toBe('');
-    //when click the logup link, then the logup link get the active class
-    logupLink.click();
     expect(loginLink.getAttribute('class')).toBe('');
     expect(logupLink.getAttribute('class')).toBe('active');
+    //when click the logup link, then the logup link get the active class
+    loginLink.click();
+    expect(loginLink.getAttribute('class')).toBe('active');
+    expect(logupLink.getAttribute('class')).toBe('');
   });
 
   describe('signin', function() {
 
     beforeEach(function() {
-      browser.get('index.html#/signin');
-    });
-
-    it('should render login when user navigates to /login', function() {
-      expect(element(by.css('[ng-view] :first-child')).isPresent()).toBe(true);
+      browser.get('index.html#/');
+      $('#loginLink').click();
     });
 
     it('should show not existing when login with the wrong user', function() {
@@ -72,11 +69,7 @@ describe('my app', function() {
 
   describe('signup', function() {
     beforeEach(function() {
-      browser.get('index.html#/signup');
-    });
-
-    it('should render longup-page when user navigates to /signup', function() {
-      expect(element(by.css('[ng-view] :first-child')).isPresent()).toBe(true);
+      browser.get('index.html#/');
     });
 
     it('email should behave properly', function() {

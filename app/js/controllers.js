@@ -2,22 +2,37 @@
 
 /* Controllers */
 
-angular.module('myApp.controllers', ['ngCookies', 'myApp.constants', 'ngRoute'])
+angular.module('myApp.controllers', ['ngCookies'])
   .controller('identifyControl',
-    ['$scope','$cookies', 'signinUrl', 'signupUrl',
-   function($scope,$cookies, signinUrl, signupUrl) {
+    ['$scope','$cookies', '$state', function($scope,$cookies, $state) {
     //get the userName from the cookie
     $scope.userName = $cookies.userName;
     $scope.isUserExists = !!$cookies.userName;
 
-    $scope.onRouteChange = function(url) {
-      if(url === signinUrl) {
-        $scope.isSigninActive = true;
-        $scope.isSignupActive = false;
-      } else if(url === signupUrl) {
-        $scope.isSignupActive = true;
-        $scope.isSigninActive = false;
+    $scope.isSignupActive = true;
+    $scope.isSigninActive = false;
+    if(!$scope.isUserExists) {
+      $state.go('signup');
+    }
+
+    function switchActiveState() {
+      $scope.isSignupActive = !$scope.isSignupActive;
+      $scope.isSigninActive = !$scope.isSigninActive;
+    }
+    $scope.onSignupClick = function($event) {
+      if(!$scope.isSignupActive) {
+        switchActiveState();
+        $state.go('signup');
       }
+      $event.preventDefault();
+    };
+
+    $scope.onSigninClick = function($event) {
+      if(!$scope.isSigninActive) {
+        switchActiveState();
+        $state.go('signin');
+      }
+      $event.preventDefault();
     };
   }])
   .controller('signupControl', ['$scope', '$http',

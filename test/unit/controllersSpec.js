@@ -3,21 +3,22 @@
 /* jasmine specs for controllers go here */
 
 describe('controllers', function(){
+  beforeEach(module('myApp.constants'));
   beforeEach(module('myApp.controllers'));
 
   describe('identifyControl ', function() {
     var scope, cookies ;
-    var signinUrl, signupUrl;
     var getController;
 
     //init the mock variables
-    beforeEach( inject( function($controller, _signinUrl_, _signupUrl_) {
+    beforeEach( inject( function($controller) {
       scope = cookies = {};
-      signinUrl = _signinUrl_;
-      signupUrl = _signupUrl_;
+      var state = {
+        go: function() {}
+      };
       getController = function() {
         return $controller('identifyControl',
-          {$scope: scope, $cookies: cookies});
+          {$scope: scope, $cookies: cookies, $state: state});
       };
     }));
 
@@ -25,14 +26,6 @@ describe('controllers', function(){
       //get the identify Controller
       var identifyControl = getController();
       expect(identifyControl).toBeDefined();
-
-      scope.onRouteChange(signinUrl);
-      expect(scope.isSigninActive).toBe(true);
-      expect(scope.isSignupActive).toBe(false);
-
-      scope.onRouteChange(signupUrl);
-      expect(scope.isSigninActive).toBe(false);
-      expect(scope.isSignupActive).toBe(true);
     });
 
     it('should get the userName', function() {

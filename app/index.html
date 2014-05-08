@@ -24,10 +24,10 @@
     </div>
       <div class="collapse navbar-collapse" id="navbar-menu">
         <ul class="nav navbar-nav">
-          <li ng-class="{active:isSignupActive}" ng-click="onMenuClick()" id="logupLink" ng-show="!isUserExists"><a href="#/signup">注册</a></li>
-          <li ng-class="{active:isSigninActive}" ng-click="onMenuClick()" id="loginLink" ng-show="!isUserExists"><a href="#/signin">登录</a></li>
+          <li ng-class="{active:isSignupActive}" id="logupLink" ng-show="!isUserExists"><a href="#" ng-click="onSignupClick($event)">注册</a></li>
+          <li ng-class="{active:isSigninActive}" id="loginLink" ng-show="!isUserExists"><a href="#" ng-click="onSigninClick($event)">登录</a></li>
           <li class="navbar-text" ng-show="isUserExists" ng-model="userName"></li>
-          <li class="active" ng-show="isUserExists"><a href="#">登出</a></li>
+          <li class="active" ng-show="isUserExists"><a href="#/">登出</a></li>
         </ul>
       </div>
     </div>
@@ -39,7 +39,8 @@
       <p>一款管理你的时间任务计划的软件。</p>
       <p>你是行动派吗？如果你是，赶紧使用吧，从现在开始规划自己的人生！</p>
     </div>
-    <div ng-view on-routechange="onRouteChange(url)"></div>
+    <!-- <div ng-view on-routechange="onRouteChange(url)"></div> -->
+    <div ui-view></div>
   </div>
 
 <!--   In production use:
@@ -47,7 +48,7 @@
   -->
   <script src="../bower_components/angular/angular.js"></script>
   <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
-  <script src="../bower_components/angular-route/angular-route.js"></script>
+  <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="js/app.js"></script>
   <script src="js/constants.js"></script>
   <script src="js/services.js"></script>

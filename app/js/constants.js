@@ -2,8 +2,6 @@
 
 
 angular.module('myApp.constants', []).
-  constant('signinUrl', '/signin').
-  constant('signupUrl', '/signup').
   constant('testUser', {
     invalidSignup: {email: '1@1', password: '1'},
     validSignup: {email: '1@123', password: '1'},

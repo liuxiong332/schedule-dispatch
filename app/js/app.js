@@ -3,18 +3,35 @@
 
 // Declare app level module which depends on filters, and services
 angular.module('myApp', [
-  'ngRoute',
+  'ui.router',
   'myApp.filters',
   'myApp.constants',
   'myApp.services',
   'myApp.directives',
   'myApp.controllers'
 ]).
-config(['$routeProvider', 'signinUrl', 'signupUrl',
-  function($routeProvider, signinUrl, signupUrl) {
-  $routeProvider.when(signinUrl, {templateUrl: 'partials/signin-page.html',
-    controller: 'signinControl'});
-  $routeProvider.when(signupUrl, {templateUrl: 'partials/signup-page.html',
-    controller: 'signupControl'});
-  $routeProvider.otherwise({redirectTo: signinUrl});
+// config(['$locationProvider', function($locationProvider) {
+//   $locationProvider.html5Mode(true);
+// }]).
+config(['$stateProvider', '$urlRouterProvider',
+  function($stateProvider, $urlRouterProvider) {
+  // $routeProvider.when(signinUrl, {templateUrl: 'partials/signin-page.html',
+  //   controller: 'signinControl'});
+  // $routeProvider.when(signupUrl, {templateUrl: 'partials/signup-page.html',
+  //   controller: 'signupControl'});
+  // $routeProvider.otherwise({redirectTo: signinUrl});
+  $stateProvider.state('signup', {
+    url: '/',
+    templateUrl: 'partials/signup-page.html',
+    controller: 'signupControl'
+  });
+  $stateProvider.state('signin', {
+    url: '/',
+    templateUrl: 'partials/signin-page.html',
+    controller: 'signinControl'
+  });
+  // $stateProvider.state('tasklist', {
+  //   url: '/:user/tasklist/{path:.*}'
+  // })
+
 }]);
