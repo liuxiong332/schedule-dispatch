@@ -30,8 +30,10 @@ config(['$stateProvider', '$urlRouterProvider',
     templateUrl: 'partials/signin-page.html',
     controller: 'signinControl'
   });
-  // $stateProvider.state('tasklist', {
-  //   url: '/:user/tasklist/{path:.*}'
-  // })
+  $stateProvider.state('tasklist', {
+    url: '/:user/tasklist/{path:.*}',
+    templateUrl: 'partials/task-detail.html',
+    controller: 'tasklistControl'
+  });
 
 }]);

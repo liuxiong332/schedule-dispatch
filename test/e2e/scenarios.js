@@ -182,4 +182,34 @@ describe('my app', function() {
       expect(userNotAvailableAlert.isDisplayed()).toBe(false);
     });
   });
+
+  describe('task detail', function() {
+    var base_url = 'index.html#/user/tasklist/';
+    it('should only show the user link', function() {
+      browser.get(base_url);
+      var liArray = element.all(by.css('.breadcrumb.lead li'));
+      expect(liArray.count()).toBe(1);
+      expect(liArray.get(0).getText()).toMatch('user');
+      liArray.get(0).$('a').click();
+      expect(browser.getCurrentUrl()).toMatch(base_url);
+    });
+
+    it('should show all of the path', function() {
+      var path_url = base_url + 'hello/world/';
+      browser.get(path_url);
+      var liArray = element.all(by.css('.breadcrumb.lead li a'));
+      expect(liArray.count()).toBe(3);
+      expect(liArray.get(0).getText()).toBe('user');
+      expect(liArray.get(1).getText()).toBe('hello');
+      expect(liArray.get(2).getText()).toBe('world');
+
+      liArray.get(2).click();
+      expect(browser.getCurrentUrl()).toMatch(/world\/$/);
+      liArray.get(1).click();
+      expect(browser.getCurrentUrl()).toMatch(/hello\/$/);
+      liArray.get(0).click();
+      expect(browser.getCurrentUrl()).toMatch(/user\/tasklist\/$/);
+    });
+
+  });
 });

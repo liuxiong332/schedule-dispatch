@@ -102,4 +102,34 @@ describe('controllers', function(){
       }));
   });
 
+  describe('tasklistControl', function() {
+    it('should analyze to get the correct view and model',
+    inject(function($controller) {
+      var scope = {};
+      var stateParams = {user: 'user', path: ''};
+      function getController() {
+        $controller('tasklistControl',
+          {$scope: scope, $stateParams: stateParams});
+      }
+
+      getController();
+      expect(scope.user).toMatch(stateParams.user);
+      expect(scope.viewModel.length).toBe(1);
+      expect(scope.viewModel[0].link).toMatch('#/user/tasklist/');
+
+      stateParams = {user: 'user', path: 'hello/world'};
+      getController();
+      expect(scope.viewModel.length).toBe(3);
+      expect(scope.viewModel[1]).toEqual({
+        view: 'hello',
+        link: '#/user/tasklist/hello/',
+        isDeactive: false
+      });
+      expect(scope.viewModel[2]).toEqual({
+        view: 'world',
+        link: '#/user/tasklist/hello/world/',
+        isDeactive: true
+      });
+    }));
+  })
 });

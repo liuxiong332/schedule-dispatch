@@ -61,4 +61,37 @@ angular.module('myApp.controllers', ['ngCookies'])
         }
       });
     };
+  }])
+  .controller('tasklistControl', ['$scope', '$stateParams',
+  function($scope, $stateParams) {
+    $scope.user = $stateParams.user;
+
+    var baseLink = '#/'+$scope.user+'/tasklist/';
+    var viewModel = $scope.viewModel = [];
+
+    var userModel = {
+        view: $scope.user,  //the string show in the ui
+        link: baseLink,     //link address
+        isDeactive: false   //the link is not active
+      };
+    var viewStr = $scope.user;
+    var pathLink = baseLink;
+
+    function AnalyzePath() {
+      var i;
+      for(i=0;i<$scope.path.length;++i) {
+        if(!$scope.path[i])  continue;
+        viewStr = $scope.path[i];
+        pathLink = pathLink + $scope.path[i] + '/';
+        viewModel.push( {view: viewStr, link: pathLink, isDeactive: false });
+      }
+    }
+
+    viewModel.push(userModel);
+    if($stateParams.path) {
+      $scope.path = $stateParams.path.split('/');
+      AnalyzePath();
+    }
+    //the last element will deactive
+    viewModel[viewModel.length-1].isDeactive = true;
   }]);

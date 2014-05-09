@@ -32,3 +32,16 @@
 .jumbotron {
   background-color: #a9e;
 }
+
+button.path-image {
+  margin-right: 10px;
+  float: left;
+}
+
+.breadcrumb.lead {
+  font-size: x-large;
+}
+
+.breadcrumb.lead a.deactive {
+  color: green;
+}

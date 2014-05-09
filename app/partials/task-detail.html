@@ -1,0 +1,8 @@
+<button type="button" class="path-image btn btn-primary btn-lg">
+  <span class="glyphicon glyphicon-star"></span> 当前任务
+</button>
+<ol class="breadcrumb lead">
+  <li ng-repeat="viewLink in viewModel">
+    <a href="{{viewLink.link}}" ng-class="{deactive:viewLink.isDeactive}">{{viewLink.view}}</a>
+  </li>
+</ol>
