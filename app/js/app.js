@@ -5,6 +5,7 @@
 angular.module('myApp', [
   'ui.router',
   'ui.bootstrap',
+  'ui.codemirror',
   'myApp.filters',
   'myApp.constants',
   'myApp.services',
