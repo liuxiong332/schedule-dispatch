@@ -185,6 +185,7 @@ describe('my app', function() {
 
   describe('task detail', function() {
     var base_url = 'index.html#/user/tasklist/';
+    var PATH_URL = base_url + 'hello/world/';
     it('should only show the user link', function() {
       browser.get(base_url);
       var liArray = element.all(by.css('.breadcrumb.lead li'));
@@ -195,8 +196,7 @@ describe('my app', function() {
     });
 
     it('should show all of the path', function() {
-      var path_url = base_url + 'hello/world/';
-      browser.get(path_url);
+      browser.get(PATH_URL);
       var liArray = element.all(by.css('.breadcrumb.lead li a'));
       expect(liArray.count()).toBe(3);
       expect(liArray.get(0).getText()).toBe('user');
@@ -211,5 +211,68 @@ describe('my app', function() {
       expect(browser.getCurrentUrl()).toMatch(/user\/tasklist\/$/);
     });
 
+    it('task overview should bind overview.content', function() {
+      browser.get(PATH_URL);
+      var  TEXT = "Hello World";
+      var overviewTextInput = $('input[ng-model="overview.content"]');
+      var overviewCompleteBtn = $('button[ng-click="overview.isInEdit=false"]');
+      var overviewStatic = $('div[ng-show="!overview.isInEdit"] p');
+      var overviewEditBtn = $('button[ng-click="overview.isInEdit=true"]');
+
+      function expectEditDisplayed(editDis) {
+        var divInEdit = $('div[ng-show="overview.isInEdit"]');
+        var divStatic = $('div[ng-show="!overview.isInEdit"]');
+        expect(divInEdit).toBeTruthy();
+        expect(divStatic).toBeTruthy();
+        expect(divInEdit.isDisplayed()).toBe(editDis);
+        expect(divStatic.isDisplayed()).toBe(!editDis);
+      }
+
+      function expectTextEquality() {
+        expect(overviewTextInput.getAttribute('value'))
+          .toBe(overviewStatic.getText());
+      }
+      expectEditDisplayed(false);
+      expectTextEquality();
+
+      overviewEditBtn.click();
+      expectEditDisplayed(true);
+
+      overviewTextInput.clear();
+      overviewTextInput.sendKeys(TEXT);
+      expect(overviewTextInput.getAttribute('value'))
+      .toBe(TEXT);
+      // expectTextEquality();
+
+      overviewCompleteBtn.click();
+      expectEditDisplayed(false);
+      expect(overviewStatic.getText())
+      .toBe(TEXT);
+    });
+
+    it('beginDate and endDate should bind to specific content',
+    function() {
+      var taskDates = element.all(
+        by.repeater('taskDate in [beginDate, endDate]'));
+      expect(taskDates.count()).toBe(2);
+      var dateControl = taskDates.get(0);
+
+      function expectEditDisplayed(isEdit) {
+        var divInEdit = dateControl.$('div[ng-show="taskDate.isInEdit"]');
+        var divStatic = dateControl.$('div[ng-show="!taskDate.isInEdit"]');
+        expect(divInEdit.isDisplayed()).toBe(isEdit);
+        expect(divStatic.isDisplayed()).toBe(!isEdit);
+      }
+
+      var completeBtn =
+      dateControl.$('button[ng-click="taskDate.isInEdit=false"]');
+      var editBtn = dateControl.$('button[ng-click="taskDate.isInEdit=true"]');
+
+      expectEditDisplayed(false);
+      editBtn.click();
+      expectEditDisplayed(true);
+      completeBtn.click();
+      expectEditDisplayed(false);
+    })
   });
 });

@@ -4,6 +4,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('myApp', [
   'ui.router',
+  'ui.bootstrap',
   'myApp.filters',
   'myApp.constants',
   'myApp.services',

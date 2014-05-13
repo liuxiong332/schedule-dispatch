@@ -6,3 +6,60 @@
     <a href="{{viewLink.link}}" ng-class="{deactive:viewLink.isDeactive}">{{viewLink.view}}</a>
   </li>
 </ol>
+
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label for="task-overview" class="col-sm-2 control-label">任务简介</label>
+    <!-- when user can edit the overview of task -->
+    <div ng-show="overview.isInEdit">
+      <div class="col-sm-9" >
+        <input type="text" ng-model="overview.content" class="form-control" id="task-overview" placeholder="输入简介"/>
+      </div>
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-primary btn-sm" ng-click="overview.isInEdit=false">
+          <span class="glyphicon glyphicon-ok"></span>
+        </button>
+      </div>
+    </div>
+    <!-- when user only see the overview of the task -->
+    <div class="col-sm-10" ng-show="!overview.isInEdit">
+      <p class="form-control-static pull-left">{{overview.content}}</p>
+      <button type="button" class="btn btn-info btn-sm enable-edit-btn" ng-click="overview.isInEdit=true">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="form-group" ng-repeat="taskDate in [beginDate, endDate]">
+    <label for="task-begindate" class="col-sm-2 control-label">{{taskDate===beginDate?'开始日期': '结束日期'}}</label>
+    <!-- when user can edit the begin date of task -->
+    <div ng-show="taskDate.isInEdit">
+      <div class="col-sm-3">
+        <div class="input-group">
+          <input type="text" class="form-control" id="task-begindate" ng-model="taskDate.content" datepicker-popup="dd-MMMM-yyyy" is-open="taskDate.isOpen" datepicker-options="{formatYear: 'yy'}" required/>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="taskDate.onPopupDatePicker($event)">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </button>
+          </span>
+        </div>
+      </div>
+
+      <div class="col-sm-2">
+        <button type="button" class="btn btn-primary btn-sm enable-edit-btn" ng-click="taskDate.isInEdit=false">
+          <span class="glyphicon glyphicon-ok"></span>
+        </button>
+      </div>
+    </div>
+    <!-- when user only see the begin date of task -->
+    <div class="col-sm-10" ng-show="!taskDate.isInEdit">
+      <p class="form-control-static pull-left">{{taskDate.content | date:'fullDate'}}</p>
+      <button type="button" class="btn btn-info enable-edit-btn btn-sm" ng-click="taskDate.isInEdit=true">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="form-group">
+  </div>
+</form>

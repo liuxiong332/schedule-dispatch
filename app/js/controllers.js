@@ -65,33 +65,55 @@ angular.module('myApp.controllers', ['ngCookies'])
   .controller('tasklistControl', ['$scope', '$stateParams',
   function($scope, $stateParams) {
     $scope.user = $stateParams.user;
+    disposeLink();
+    //set the link of the path
+    function disposeLink() {
+      var baseLink = '#/'+$scope.user+'/tasklist/';
+      var viewModel = $scope.viewModel = [];
 
-    var baseLink = '#/'+$scope.user+'/tasklist/';
-    var viewModel = $scope.viewModel = [];
+      var userModel = {
+          view: $scope.user,  //the string show in the ui
+          link: baseLink,     //link address
+          isDeactive: false   //the link is not active
+        };
+      var viewStr = $scope.user;
+      var pathLink = baseLink;
 
-    var userModel = {
-        view: $scope.user,  //the string show in the ui
-        link: baseLink,     //link address
-        isDeactive: false   //the link is not active
-      };
-    var viewStr = $scope.user;
-    var pathLink = baseLink;
-
-    function AnalyzePath() {
-      var i;
-      for(i=0;i<$scope.path.length;++i) {
-        if(!$scope.path[i])  continue;
-        viewStr = $scope.path[i];
-        pathLink = pathLink + $scope.path[i] + '/';
-        viewModel.push( {view: viewStr, link: pathLink, isDeactive: false });
+      function AnalyzePath() {
+        var i;
+        for(i=0;i<$scope.path.length;++i) {
+          if(!$scope.path[i])  continue;
+          viewStr = $scope.path[i];
+          pathLink = pathLink + $scope.path[i] + '/';
+          viewModel.push( {view: viewStr, link: pathLink, isDeactive: false });
+        }
       }
+
+      viewModel.push(userModel);
+      if($stateParams.path) {
+        $scope.path = $stateParams.path.split('/');
+        AnalyzePath();
+      }
+      //the last element will deactive
+      viewModel[viewModel.length-1].isDeactive = true;
     }
 
-    viewModel.push(userModel);
-    if($stateParams.path) {
-      $scope.path = $stateParams.path.split('/');
-      AnalyzePath();
+    function TaskDate() {
+      this.content = new Date();
+      this.isInEdit = false;
+      this.isOpen = false;
     }
-    //the last element will deactive
-    viewModel[viewModel.length-1].isDeactive = true;
+    TaskDate.prototype.onPopupDatePicker = function($event) {
+      $event.stopPropagation();
+      $event.preventDefault();
+      this.isOpen = true;
+    };
+
+    $scope.overview = {
+      isInEdit: false,
+      content: '如果你是，赶紧使用吧，从现在开始规划自己的人生！'
+    };
+    $scope.beginDate = new TaskDate();
+    $scope.endDate = new TaskDate();
+
   }]);

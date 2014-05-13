@@ -45,3 +45,7 @@ button.path-image {
 .breadcrumb.lead a.deactive {
   color: green;
 }
+
+.btn.enable-edit-btn {
+  margin-left: 20px;
+}
