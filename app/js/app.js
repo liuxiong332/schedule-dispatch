@@ -6,6 +6,7 @@ angular.module('myApp', [
   'ui.router',
   'ui.bootstrap',
   'ui.codemirror',
+  'hc.marked',
   'myApp.filters',
   'myApp.constants',
   'myApp.services',
@@ -38,4 +39,7 @@ config(['$stateProvider', '$urlRouterProvider',
     controller: 'tasklistControl'
   });
 
+}]).
+config(['markedProvider', function(markedProvider) {
+  markedProvider.setOptions({gfm: true});
 }]);

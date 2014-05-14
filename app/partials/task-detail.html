@@ -61,6 +61,28 @@
   </div>
 
   <div class="form-group">
-    <div ui-codemirror></div>
+    <label class="col-sm-1 control-label">详细描述</label>
+    <div class="col-sm-3"></div>
+    <div class="col-sm-2" ng-show="!detail.isInEdit">
+      <button type="button" class="btn btn-info btn-sm enable-edit-btn" ng-click="detail.isInEdit=true">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </button>
+    </div>
+    <div class="col-sm-2" ng-show="detail.isInEdit">
+      <button type="button" class="btn btn-primary btn-sm" ng-click="detail.isInEdit=false">
+        <span class="glyphicon glyphicon-ok"></span>
+      </button>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-1"></label>
+    <div class="col-sm-11">
+      <div ng-show="detail.isInEdit">
+        <div  ui-codemirror="{lineNumbers: true, linewrapping: true, mode: 'gfm'}" ng-model="detail.content"></div>
+      </div>
+      <div ng-show="!detail.isInEdit">
+        <div marked="detail.content"></div>
+      </div>
+    </div>
   </div>
 </form>

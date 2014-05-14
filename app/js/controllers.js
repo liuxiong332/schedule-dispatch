@@ -115,5 +115,9 @@ angular.module('myApp.controllers', ['ngCookies'])
     };
     $scope.beginDate = new TaskDate();
     $scope.endDate = new TaskDate();
+    $scope.detail = {
+      isInEdit: true,
+      content: '### 任务概要 \n\n* 要点一\n* 要点二\n* 要点三\n\n[链接](#)\n'
+    };
 
   }]);

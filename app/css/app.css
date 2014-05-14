@@ -49,3 +49,7 @@ button.path-image {
 .btn.enable-edit-btn {
   margin-left: 20px;
 }
+
+.CodeMirror {
+  line-height: 1.43em;
+}
