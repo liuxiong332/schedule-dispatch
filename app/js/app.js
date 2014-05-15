@@ -33,12 +33,22 @@ config(['$stateProvider', '$urlRouterProvider',
     templateUrl: 'partials/signin-page.html',
     controller: 'signinControl'
   });
+  var taskListUrl = '/:user/tasklist/{path:.*}';
   $stateProvider.state('tasklist', {
-    url: '/:user/tasklist/{path:.*}',
+    url: taskListUrl,
+    controller: 'tasklistControl',
     templateUrl: 'partials/task-detail.html',
-    controller: 'tasklistControl'
+    resolve: {
+      currentUrl: function() {
+        return taskListUrl;
+      }
+    }
   });
-
+  $stateProvider.state('newTask', {
+    url: taskListUrl,
+    templateUrl: 'partials/new-task.html',
+    controller: 'newTaskControl'
+  });
 }]).
 config(['markedProvider', function(markedProvider) {
   markedProvider.setOptions({gfm: true});

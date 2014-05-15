@@ -62,41 +62,10 @@ angular.module('myApp.controllers', ['ngCookies'])
       });
     };
   }])
-  .controller('tasklistControl', ['$scope', '$stateParams',
-  function($scope, $stateParams) {
+  .controller('tasklistControl', ['$scope', '$stateParams', '$state',
+    'currentUrl', function($scope, $stateParams, $state, currentUrl) {
     $scope.user = $stateParams.user;
     disposeLink();
-    //set the link of the path
-    function disposeLink() {
-      var baseLink = '#/'+$scope.user+'/tasklist/';
-      var viewModel = $scope.viewModel = [];
-
-      var userModel = {
-          view: $scope.user,  //the string show in the ui
-          link: baseLink,     //link address
-          isDeactive: false   //the link is not active
-        };
-      var viewStr = $scope.user;
-      var pathLink = baseLink;
-
-      function AnalyzePath() {
-        var i;
-        for(i=0;i<$scope.path.length;++i) {
-          if(!$scope.path[i])  continue;
-          viewStr = $scope.path[i];
-          pathLink = pathLink + $scope.path[i] + '/';
-          viewModel.push( {view: viewStr, link: pathLink, isDeactive: false });
-        }
-      }
-
-      viewModel.push(userModel);
-      if($stateParams.path) {
-        $scope.path = $stateParams.path.split('/');
-        AnalyzePath();
-      }
-      //the last element will deactive
-      viewModel[viewModel.length-1].isDeactive = true;
-    }
 
     function TaskDate() {
       this.content = new Date();
@@ -109,6 +78,14 @@ angular.module('myApp.controllers', ['ngCookies'])
       this.isOpen = true;
     };
 
+    $scope.getSubTaskUrl = function(name) {
+      return currentUrl+name+'/';
+    }
+    $scope.onCreateNewTask = function($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+      $state.go('newTask');
+    };
     $scope.overview = {
       isInEdit: false,
       content: '如果你是，赶紧使用吧，从现在开始规划自己的人生！'
@@ -116,8 +93,61 @@ angular.module('myApp.controllers', ['ngCookies'])
     $scope.beginDate = new TaskDate();
     $scope.endDate = new TaskDate();
     $scope.detail = {
-      isInEdit: true,
-      content: '### 任务概要 \n\n* 要点一\n* 要点二\n* 要点三\n\n[链接](#)\n'
+      isInEdit: false,
+      content: '* 要点一\n* 要点二\n* 要点三\n\n[链接](#)\n'
     };
 
+    function Progress(name, date, content) {
+      this.nameCommit = name;
+      this.dateCommit = date;
+      this.contentCommit = content;
+    }
+
+    $scope.progressList = [
+      new Progress('提交1', new Date(), '好像什么都没做'),
+      new Progress('提交2', new Date(), '做了什么呢？')
+    ];
+    function currentUrlEndWithSlash() {
+      if(currentUrl[currentUrl.length-1] !== '/') //judge is end with /
+        currentUrl = currentUrl+'/';
+    }
+    //set the link of the path
+    function disposeLink() {
+      var baseLink = '#/'+$scope.user+'/tasklist/';
+      var viewModel = $scope.viewModel = [];
+
+      var userModel = {
+          view: $scope.user,  //the string show in the ui
+          link: baseLink,     //link address
+          isDeactive: false   //the link is not active
+        };
+      viewModel.push(userModel);
+      if($stateParams.path) {
+        $scope.currentPath = $stateParams.path;
+        $scope.path = $stateParams.path.split('/');
+        AnalyzePath();
+      }
+      //the last element will deactive
+      viewModel[viewModel.length-1].isDeactive = true;
+
+      function AnalyzePath() {
+        var i;
+        var viewStr = $scope.user;  //the str show in the web pages
+        var pathLink = baseLink;    //the link url for every path string
+        for(i=0;i<$scope.path.length;++i) {
+          if(!$scope.path[i])  continue;
+          viewStr = $scope.path[i];
+          pathLink = pathLink + $scope.path[i] + '/';
+          viewModel.push( {view: viewStr, link: pathLink, isDeactive: false });
+        }
+      }
+    }
+  }])
+  .controller('newTaskControl', ['$scope', '$state',
+  function($scope, $state) {
+    $scope.onComplete = function($event) {
+      $event.stopPropagation();
+      $event.preventDefault();
+      $state.go('tasklist');
+    };
   }]);

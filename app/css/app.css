@@ -53,3 +53,7 @@ button.path-image {
 .CodeMirror {
   line-height: 1.43em;
 }
+
+.progressbar-text {
+  margin-bottom: 0px;
+}

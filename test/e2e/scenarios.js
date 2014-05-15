@@ -252,6 +252,7 @@ describe('my app', function() {
 
     it('beginDate and endDate should bind to specific content',
     function() {
+      browser.get(PATH_URL);
       var taskDates = element.all(
         by.repeater('taskDate in [beginDate, endDate]'));
       expect(taskDates.count()).toBe(2);
@@ -273,6 +274,19 @@ describe('my app', function() {
       expectEditDisplayed(true);
       completeBtn.click();
       expectEditDisplayed(false);
-    })
+    });
+
+    it('task detail should get the wanted value', function() {
+      browser.get(PATH_URL);
+      var editBtn = $('button[ng-show="!detail.isInEdit"]');
+      var completeBtn = $('button[ng-show="detail.isInEdit"]');
+
+      expect(editBtn.isDisplayed()).toBe(true);
+      expect(completeBtn.isDisplayed()).toBe(false);
+
+      editBtn.click();
+      expect(editBtn.isDisplayed()).toBe(false);
+      expect(completeBtn.isDisplayed()).toBe(true);
+    });
   });
 });

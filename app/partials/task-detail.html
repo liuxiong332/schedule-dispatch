@@ -62,17 +62,13 @@
 
   <div class="form-group">
     <label class="col-sm-1 control-label">详细描述</label>
-    <div class="col-sm-3"></div>
-    <div class="col-sm-2" ng-show="!detail.isInEdit">
-      <button type="button" class="btn btn-info btn-sm enable-edit-btn" ng-click="detail.isInEdit=true">
-        <span class="glyphicon glyphicon-pencil"></span>
-      </button>
-    </div>
-    <div class="col-sm-2" ng-show="detail.isInEdit">
-      <button type="button" class="btn btn-primary btn-sm" ng-click="detail.isInEdit=false">
-        <span class="glyphicon glyphicon-ok"></span>
-      </button>
-    </div>
+    <span class="col-xs-1"></span>
+    <button type="button" class="btn btn-info btn-sm" ng-show="!detail.isInEdit" ng-click="detail.isInEdit=true">
+      <span class="glyphicon glyphicon-pencil"></span>
+    </button>
+    <button type="button" class="btn btn-primary btn-sm" ng-show="detail.isInEdit" ng-click="detail.isInEdit=false">
+      <span class="glyphicon glyphicon-ok"></span>
+    </button>
   </div>
   <div class="form-group">
     <label class="col-sm-1"></label>
@@ -82,6 +78,57 @@
       </div>
       <div ng-show="!detail.isInEdit">
         <div marked="detail.content"></div>
+      </div>
+      </div>
+  </div>
+
+  <!-- 子任务列表 -->
+  <div class="form-group">
+    <label class="col-sm-1 control-label">子任务</label>
+    <div class="col-sm-10">
+      <div>
+        <button type="button" class="btn btn-info btn-sm" ng-click="onCreateNewTask($event)">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+      </div>
+      <p></p>
+      <div class="panel panel-info" ng-repeat="task in subTasks">
+        <div class="panel-heading">
+          <a href="{{getSubTaskUrl(task.name)}}">{{task.name}}</a>
+        </div>
+        <div class="panel-body">{{task.overview}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-1 control-label">进度提交</label>
+    <div class="col-sm-10">
+      <button type="button" class="btn btn-info btn-sm">
+        <span class="glyphicon glyphicon-plus"></span>
+      </button>
+      <p></p>
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-sm-10">执行时间</div>
+            <div class="col-sm-2">
+              <progressbar value="50" class="progressbar-text"><b>50%</b></progressbar>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">{{task.overview}}</div>
+      </div>
+      <div class="panel panel-info" ng-repeat="progress in progressList">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-sm-10">{{progress.nameCommit}}({{progress.dateCommit | date:'fullDate'}})</div>
+            <div class="col-sm-2">
+              <progressbar value="50" class="progressbar-text"><b>50%</b></progressbar>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">{{progress.contentCommit}}</div>
       </div>
     </div>
   </div>
