@@ -10,6 +10,7 @@ angular.module('myApp', [
   'myApp.filters',
   'myApp.constants',
   'myApp.services',
+  'myApp.datePicker',
   'myApp.directives',
   'myApp.controllers'
 ]).
@@ -48,6 +49,11 @@ config(['$stateProvider', '$urlRouterProvider',
     url: taskListUrl,
     templateUrl: 'partials/new-task.html',
     controller: 'newTaskControl'
+  });
+  $stateProvider.state('newProgress', {
+    url: taskListUrl,
+    templateUrl: 'partials/progress-add.html',
+    controller: 'progressAddControl'
   });
 }]).
 config(['markedProvider', function(markedProvider) {

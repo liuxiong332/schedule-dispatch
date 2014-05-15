@@ -107,6 +107,12 @@ angular.module('myApp.controllers', ['ngCookies'])
       new Progress('提交1', new Date(), '好像什么都没做'),
       new Progress('提交2', new Date(), '做了什么呢？')
     ];
+    $scope.onAddProgress = function($event) {
+      $event.stopPropagation();
+      $event.preventDefault();
+      $state.go('newProgress');
+    };
+
     function currentUrlEndWithSlash() {
       if(currentUrl[currentUrl.length-1] !== '/') //judge is end with /
         currentUrl = currentUrl+'/';
@@ -145,6 +151,16 @@ angular.module('myApp.controllers', ['ngCookies'])
   }])
   .controller('newTaskControl', ['$scope', '$state',
   function($scope, $state) {
+    $scope.onComplete = function($event) {
+      $event.stopPropagation();
+      $event.preventDefault();
+      $state.go('tasklist');
+    };
+  }])
+  .controller('progressAddControl', ['$scope', '$state',
+  function($scope, $state) {
+    $scope.progress = {};
+    $scope.progress.date = new Date();
     $scope.onComplete = function($event) {
       $event.stopPropagation();
       $event.preventDefault();

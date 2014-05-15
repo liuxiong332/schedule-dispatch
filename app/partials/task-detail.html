@@ -34,17 +34,7 @@
     <label for="task-begindate" class="col-sm-1 control-label">{{taskDate===beginDate?'开始日期': '结束日期'}}</label>
     <!-- when user can edit the begin date of task -->
     <div ng-show="taskDate.isInEdit">
-      <div class="col-sm-3">
-        <div class="input-group">
-          <input type="text" class="form-control" id="task-begindate" ng-model="taskDate.content" datepicker-popup="dd-MMMM-yyyy" is-open="taskDate.isOpen" datepicker-options="{formatYear: 'yy'}" required/>
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="taskDate.onPopupDatePicker($event)">
-              <span class="glyphicon glyphicon-calendar"></span>
-            </button>
-          </span>
-        </div>
-      </div>
-
+      <date-editor date-input="taskDate"></date-editor>
       <div class="col-sm-2">
         <button type="button" class="btn btn-primary btn-sm enable-edit-btn" ng-click="taskDate.isInEdit=false">
           <span class="glyphicon glyphicon-ok"></span>
@@ -104,7 +94,7 @@
   <div class="form-group">
     <label class="col-sm-1 control-label">进度提交</label>
     <div class="col-sm-10">
-      <button type="button" class="btn btn-info btn-sm">
+      <button type="button" class="btn btn-info btn-sm" ng-click="onAddProgress($event)">
         <span class="glyphicon glyphicon-plus"></span>
       </button>
       <p></p>

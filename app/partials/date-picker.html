@@ -1,7 +1,7 @@
-<div class="col-sm-3">
+<div class="col-sm-3" ng-controller="datePickerEditor">
   <div class="input-group">
     <input type="text" class="form-control" ng-model="dateInput.content" datepicker-popup="dd-MMMM-yyyy" is-open="isOpen" datepicker-options="{formatYear: 'yy'}" required/>
-    <span class="input-group-btn">
+    <span class="input-group-btn" >
       <button type="button" class="btn btn-default" ng-click="onPopupDatePicker($event)">
         <span class="glyphicon glyphicon-calendar"></span>
       </button>

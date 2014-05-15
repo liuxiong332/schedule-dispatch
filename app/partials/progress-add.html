@@ -1,10 +1,15 @@
 <form class="form-horizontal" role="form">
   <div class="form-group">
     <label for="progressNameInput" class="col-sm-1 control-label">提交名称</label>
-    <input type="text" ng-model="progressName" class="form-control" id="progressNameInput" placeholder="请输入提交进度名称">
+    <input type="text" ng-model="progress.name" class="form-control" id="progressNameInput" placeholder="请输入提交进度名称">
   </div>
   <div class="form-group">
     <label for="progressDateInput" class="col-sm-1 control-label">提交日期</label>
-
+    <date-editor date-input="progress.date"></date-editor>
   </div>
+  <div class="form-group">
+    <label for="progressContentInput" class="col-sm-1 control-label">提交内容</label>
+    <input type="text" ng-model="progress.content" class="form-control" id="progressContentInput" placeholder="请输入提交内容"/>
+  </div>
+  <button type="button" class="btn btn-primary" ng-click="onComplete($event)">完成</button>
 </form>
