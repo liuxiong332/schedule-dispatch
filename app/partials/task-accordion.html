@@ -1,0 +1,12 @@
+
+<h1>{{heading}}
+  <span class="pull-right">
+    <button type="button" class="btn btn-primary" ng-click="isOpen=!isOpen">
+      <i class="glyphicon" ng-class="{'glyphicon-plus': !isOpen, 'glyphicon-minus': isOpen}"></i>
+    </button>
+    <button type="button" class="btn btn-primary" ng-click="onEdit($event)">
+      Edit
+    </button>
+  </span>
+</h1>
+<div ng-transclude collpase="!isOpen"></div>

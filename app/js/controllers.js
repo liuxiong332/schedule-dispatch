@@ -65,7 +65,7 @@ angular.module('myApp.controllers', ['ngCookies'])
   .controller('tasklistControl', ['$scope', '$stateParams', '$state',
     'currentUrl', function($scope, $stateParams, $state, currentUrl) {
     $scope.user = $stateParams.user;
-    disposeLink();
+    $scope.stateParams = $stateParams;
 
     function TaskDate() {
       this.content = new Date();
@@ -84,7 +84,7 @@ angular.module('myApp.controllers', ['ngCookies'])
     $scope.onCreateNewTask = function($event) {
       $event.preventDefault();
       $event.stopPropagation();
-      $state.go('newTask');
+      $state.go('newTask', $stateParams);
     };
     $scope.overview = {
       isInEdit: false,
@@ -93,7 +93,6 @@ angular.module('myApp.controllers', ['ngCookies'])
     $scope.beginDate = new TaskDate();
     $scope.endDate = new TaskDate();
     $scope.detail = {
-      isInEdit: false,
       content: '* 要点一\n* 要点二\n* 要点三\n\n[链接](#)\n'
     };
 
@@ -110,7 +109,7 @@ angular.module('myApp.controllers', ['ngCookies'])
     $scope.onAddProgress = function($event) {
       $event.stopPropagation();
       $event.preventDefault();
-      $state.go('newProgress');
+      $state.go('newProgress', $stateParams);
     };
 
     function currentUrlEndWithSlash() {
@@ -118,34 +117,33 @@ angular.module('myApp.controllers', ['ngCookies'])
         currentUrl = currentUrl+'/';
     }
     //set the link of the path
-    function disposeLink() {
-      var baseLink = '#/'+$scope.user+'/tasklist/';
-      var viewModel = $scope.viewModel = [];
 
-      var userModel = {
-          view: $scope.user,  //the string show in the ui
-          link: baseLink,     //link address
-          isDeactive: false   //the link is not active
-        };
-      viewModel.push(userModel);
-      if($stateParams.path) {
-        $scope.currentPath = $stateParams.path;
-        $scope.path = $stateParams.path.split('/');
-        AnalyzePath();
-      }
-      //the last element will deactive
-      viewModel[viewModel.length-1].isDeactive = true;
+  }])
+  .controller('taskPathControl', ['$scope', function($scope) {
+    var baseLink = '#/'+$scope.user+'/tasklist/';
+    var viewModel = $scope.viewModel = [];
+    var taskPath, path = $scope.stateParams.path;
 
-      function AnalyzePath() {
-        var i;
-        var viewStr = $scope.user;  //the str show in the web pages
-        var pathLink = baseLink;    //the link url for every path string
-        for(i=0;i<$scope.path.length;++i) {
-          if(!$scope.path[i])  continue;
-          viewStr = $scope.path[i];
-          pathLink = pathLink + $scope.path[i] + '/';
-          viewModel.push( {view: viewStr, link: pathLink, isDeactive: false });
-        }
+    var userModel = {
+        view: $scope.user,  //the string show in the ui
+        link: baseLink,     //link address
+        isDeactive: false   //the link is not active
+      };
+    viewModel.push(userModel);
+    if(path) {
+      taskPath = path.split('/');
+      AnalyzePath(taskPath);
+    }
+    //the last element will deactive
+    viewModel[viewModel.length-1].isDeactive = true;
+
+    function AnalyzePath(taskPath) {
+      var viewStr;  //the str show in the web pages
+      var pathLink = baseLink;    //the link url for every path string
+      for(var i=0;i<taskPath.length;++i) {
+        if(!(viewStr = taskPath[i]))  continue;
+        pathLink = pathLink + viewStr + '/';
+        viewModel.push( {view: viewStr, link: pathLink, isDeactive: false });
       }
     }
   }])

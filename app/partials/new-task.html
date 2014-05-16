@@ -1,11 +1,23 @@
-<form class="form-horizontal" role="form">
+<form class="form" role="form">
   <div class="form-group">
-    <label for="newTaskNameInput" class="col-sm-1 control-label">任务名称</label>
-    <input type="text" ng-model="taskName" class="form-control" id="newTaskNameInput" placeholder="输入任务名称"/>
+    <label for="nameInput">任务名称</label>
+    <input type="text" ng-model="taskName" class="form-control" id="nameInput" placeholder="输入任务名称"/>
   </div>
   <div class="form-group">
-    <label for="newTaskDesInput" class="col-sm-1 control-label">任务简介</label>
-    <input type="text" ng-model="taskOverview" class="form-control" id="newTaskOverviewInput" placeholder="输入任务简介"/>
+    <label for="overviewInput">任务简介</label>
+    <input type="text" ng-model="taskOverview" class="form-control" id="overviewInput" placeholder="输入任务简介"/>
   </div>
+
+  <div class="form-group" ng-repeat="taskDate in [beginDate, endDate]">
+    <label>
+    {{taskDate===beginDate?'开始日期': '结束日期'}}
+      <date-editor date-input="taskDate"></date-editor>
+    </label>
+  </div>
+  <div class="form-group">
+    <label>任务描述label>
+    <div  ui-codemirror="{lineNumbers: true, linewrapping: true, mode: 'gfm'}" ng-model="detail.content"></div>
+  </div>
+
   <button type="button" class="btn btn-primary" ng-click="onComplete($event)">完成</button>
 </form>

@@ -1,125 +1,55 @@
 <button type="button" class="path-image btn btn-primary btn-lg">
   <span class="glyphicon glyphicon-star"></span> 当前任务
 </button>
-<ol class="breadcrumb lead">
+
+<ol class="breadcrumb lead" ng-controller="taskPathControl">
   <li ng-repeat="viewLink in viewModel">
     <a href="{{viewLink.link}}" ng-class="{deactive:viewLink.isDeactive}">{{viewLink.view}}</a>
   </li>
 </ol>
 
-<form class="form-horizontal" role="form">
-  <div class="form-group">
-    <label for="task-overview" class="col-sm-1 control-label">任务简介</label>
-    <!-- when user can edit the overview of task -->
-    <div ng-show="overview.isInEdit">
-      <div class="col-sm-9" >
-        <input type="text" ng-model="overview.content" class="form-control" id="task-overview" placeholder="输入简介"/>
-      </div>
-      <div class="col-sm-1">
-        <button type="button" class="btn btn-primary btn-sm" ng-click="overview.isInEdit=false">
-          <span class="glyphicon glyphicon-ok"></span>
-        </button>
+<task-accordion heading="'基本信息'">
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label class="col-sm-1 control-label">任务简介
+      </label>
+      <div class="col-sm-11">
+        <p class="form-control-static">{{overview.content}}</p>
       </div>
     </div>
-    <!-- when user only see the overview of the task -->
-    <div class="col-sm-10" ng-show="!overview.isInEdit">
-      <p class="form-control-static pull-left">{{overview.content}}</p>
-      <button type="button" class="btn btn-info btn-sm enable-edit-btn" ng-click="overview.isInEdit=true">
-        <span class="glyphicon glyphicon-pencil"></span>
-      </button>
+    <div class="form-group" ng-repeat="taskDate in [beginDate, endDate]">
+      <label for="task-begindate" class="col-sm-1 control-label">{{taskDate===beginDate?'开始日期': '结束日期'}}
+      </label>
+      <div class="col-sm-11">
+        <p class="form-control-static">{{taskDate.content | date:'fullDate'}}</p>
+      </div>
     </div>
-  </div>
+  </form>
+</task-accordion>
 
-  <div class="form-group" ng-repeat="taskDate in [beginDate, endDate]">
-    <label for="task-begindate" class="col-sm-1 control-label">{{taskDate===beginDate?'开始日期': '结束日期'}}</label>
-    <!-- when user can edit the begin date of task -->
-    <div ng-show="taskDate.isInEdit">
-      <date-editor date-input="taskDate"></date-editor>
-      <div class="col-sm-2">
-        <button type="button" class="btn btn-primary btn-sm enable-edit-btn" ng-click="taskDate.isInEdit=false">
-          <span class="glyphicon glyphicon-ok"></span>
-        </button>
-      </div>
-    </div>
-    <!-- when user only see the begin date of task -->
-    <div class="col-sm-10" ng-show="!taskDate.isInEdit">
-      <p class="form-control-static pull-left">{{taskDate.content | date:'fullDate'}}</p>
-      <button type="button" class="btn btn-info enable-edit-btn btn-sm" ng-click="taskDate.isInEdit=true">
-        <span class="glyphicon glyphicon-pencil"></span>
-      </button>
-    </div>
-  </div>
+<task-accordion heading="'详细描述'">
+  <div marked="detail.content"></div>
+</task-accordion>
 
-  <div class="form-group">
-    <label class="col-sm-1 control-label">详细描述</label>
-    <span class="col-xs-1"></span>
-    <button type="button" class="btn btn-info btn-sm" ng-show="!detail.isInEdit" ng-click="detail.isInEdit=true">
-      <span class="glyphicon glyphicon-pencil"></span>
-    </button>
-    <button type="button" class="btn btn-primary btn-sm" ng-show="detail.isInEdit" ng-click="detail.isInEdit=false">
-      <span class="glyphicon glyphicon-ok"></span>
-    </button>
+<task-accordion heading="'子任务列表'">
+  <div class="panel panel-info" ng-repeat="task in subTasks">
+    <div class="panel-heading">
+      <a href="{{getSubTaskUrl(task.name)}}">{{task.name}}</a>
+    </div>
+    <div class="panel-body">{{task.overview}}</div>
   </div>
-  <div class="form-group">
-    <label class="col-sm-1"></label>
-    <div class="col-sm-11">
-      <div ng-show="detail.isInEdit">
-        <div  ui-codemirror="{lineNumbers: true, linewrapping: true, mode: 'gfm'}" ng-model="detail.content"></div>
-      </div>
-      <div ng-show="!detail.isInEdit">
-        <div marked="detail.content"></div>
-      </div>
-      </div>
-  </div>
+</task-accordion>
 
-  <!-- 子任务列表 -->
-  <div class="form-group">
-    <label class="col-sm-1 control-label">子任务</label>
-    <div class="col-sm-10">
-      <div>
-        <button type="button" class="btn btn-info btn-sm" ng-click="onCreateNewTask($event)">
-          <span class="glyphicon glyphicon-plus"></span>
-        </button>
-      </div>
-      <p></p>
-      <div class="panel panel-info" ng-repeat="task in subTasks">
-        <div class="panel-heading">
-          <a href="{{getSubTaskUrl(task.name)}}">{{task.name}}</a>
+<task-accordion heading="'进度提交'">
+  <div class="panel panel-info" ng-repeat="progress in progressList">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-sm-10">{{progress.nameCommit}}({{progress.dateCommit | date:'fullDate'}})</div>
+        <div class="col-sm-2">
+          <progressbar value="50" class="progressbar-text"><b>50%</b></progressbar>
         </div>
-        <div class="panel-body">{{task.overview}}</div>
       </div>
     </div>
+    <div class="panel-body">{{progress.contentCommit}}</div>
   </div>
-
-  <div class="form-group">
-    <label class="col-sm-1 control-label">进度提交</label>
-    <div class="col-sm-10">
-      <button type="button" class="btn btn-info btn-sm" ng-click="onAddProgress($event)">
-        <span class="glyphicon glyphicon-plus"></span>
-      </button>
-      <p></p>
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-sm-10">执行时间</div>
-            <div class="col-sm-2">
-              <progressbar value="50" class="progressbar-text"><b>50%</b></progressbar>
-            </div>
-          </div>
-        </div>
-        <div class="panel-body">{{task.overview}}</div>
-      </div>
-      <div class="panel panel-info" ng-repeat="progress in progressList">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-sm-10">{{progress.nameCommit}}({{progress.dateCommit | date:'fullDate'}})</div>
-            <div class="col-sm-2">
-              <progressbar value="50" class="progressbar-text"><b>50%</b></progressbar>
-            </div>
-          </div>
-        </div>
-        <div class="panel-body">{{progress.contentCommit}}</div>
-      </div>
-    </div>
-  </div>
-</form>
+</task-accordion>

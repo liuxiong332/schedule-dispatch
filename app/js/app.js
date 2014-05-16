@@ -12,7 +12,8 @@ angular.module('myApp', [
   'myApp.services',
   'myApp.datePicker',
   'myApp.directives',
-  'myApp.controllers'
+  'myApp.controllers',
+  'myApp.taskAccordion'
 ]).
 // config(['$locationProvider', function($locationProvider) {
 //   $locationProvider.html5Mode(true);
