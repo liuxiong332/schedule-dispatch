@@ -9,7 +9,7 @@
       {
         "name": "Task1.Task1",
         "overview": "sub task of Task1"
-      }
+      },
       {
         "name": "Task1.Task2",
         "overview": "sub task of Task2 "
@@ -40,11 +40,11 @@
     "subTasks": [
       {
         "name": "Task2.Task1",
-        "overview": "sub task of Task1 "
-      }
+        "overview": "sub task of Task1"
+      },
       {
         "name": "Task2.Task2",
-        "overview: sub task of Task2 "
+        "overview": "sub task of Task2 "
       }
     ],
     "progressList": [

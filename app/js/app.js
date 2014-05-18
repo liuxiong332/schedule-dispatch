@@ -36,17 +36,26 @@ config(['$stateProvider', '$urlRouterProvider',
     templateUrl: 'partials/signin-page.html',
     controller: 'signinControl'
   });
-  var taskListUrl = '/:user/tasklist/{path:.*}';
+  var rootlistUrl = '^/:user/tasklist/';
+  var sublistUrl = '^/:user/tasklist/{path:[^ ]*}';
+  var taskListUrl = '/:user/taskheader/{path:.*}';
+  $stateProvider.state('tasklist.sublist', {
+    url:  sublistUrl,
+    controller: 'tasklistControl',
+    templateUrl: 'partials/task-detail.html'
+  });
   $stateProvider.state('tasklist', {
     url: taskListUrl,
     controller: 'tasklistControl',
-    templateUrl: 'partials/task-detail.html',
+    templateUrl: 'partials/task-list.html',
     resolve: {
       currentUrl: function() {
         return taskListUrl;
       }
     }
   });
+
+
   $stateProvider.state('newTask', {
     url: taskListUrl,
     templateUrl: 'partials/new-task.html',

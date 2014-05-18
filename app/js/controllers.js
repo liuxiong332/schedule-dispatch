@@ -69,9 +69,10 @@ angular.module('myApp.controllers', ['ngCookies'])
     $scope.stateParams = $stateParams;
 
     var taskPath = $stateParams.path;
-    if(taskPath[0] === '/')   taskPath = '/' + taskPath;
+    if(taskPath[0] !== '/')   taskPath = '/' + taskPath;
     TaskInfo.get({user: $stateParams.user, taskPath: taskPath},
     function(task) {
+      alert(JSON.stringify(task));
       $scope.task = task;
     });
 

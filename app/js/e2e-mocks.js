@@ -31,8 +31,7 @@
     // /user/taskBasic 任务基本信息
     // /user/taskDetail 任务详细描述
 
-    $http.get('testdata/tasks.json').success(function(tasks)
-    {
+    $http.get('testdata/tasks.json').success(function(tasks) {
       var task1Path = encodeURIComponent('/Task1');
       var task2Path = encodeURIComponent('/Task2');
       var taskInfoURI = '/user/taskInfo?taskPath=';
@@ -40,6 +39,7 @@
 
       $httpBackend.whenGET('/user/subTasks?taskPath='+rootPath)
       .respond( tasks );
+      $httpBackend.whenGET(taskInfoURI+rootPath).respond({subTasks: tasks});
       $httpBackend.whenGET(taskInfoURI+task1Path).respond( tasks[0] );
       $httpBackend.whenGET(taskInfoURI+task2Path).respond( tasks[1] );
 
@@ -68,8 +68,7 @@
       function(method, url, text) {
         tasks[1].detail = text;
         return [200];
-       });
+      });
     });
-
   });
 }());
