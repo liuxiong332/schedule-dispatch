@@ -3,6 +3,7 @@
 
 // Declare app level module which depends on filters, and services
 angular.module('myApp', [
+  'ngResource',
   'ui.router',
   'ui.bootstrap',
   'ui.codemirror',

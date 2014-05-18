@@ -14,6 +14,7 @@
     "angular-ui-router": "~0.2.10",
     "angular-bootstrap": "~0.11.0",
     "angular-ui-codemirror": "~0.1.1",
-    "angular-marked": "~0.0.12"
+    "angular-marked": "~0.0.12",
+    "angular-resource": "~1.2.16"
   }
 }

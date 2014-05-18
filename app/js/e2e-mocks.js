@@ -25,33 +25,50 @@
     // angular.module('myApp').requires.push('e2eMocks');
 
     //TaskInfo Restful MOCK
-    $http.get('/testdata/tasks.json').success(function(tasks)
-    {
-      var task1URI = '/user/taskInfo?taskPath='+
-        encodeURIComponent('/Task1');
-      var task2URI = '/user/taskInfo?taskPath='+
-        encodeURIComponent('/Task2');
+    // /user/subTasks  子任务资源
+    // /user/progress  进度资源
+    // /user/taskInfo  任务信息
+    // /user/taskBasic 任务基本信息
+    // /user/taskDetail 任务详细描述
 
-      $httpBackend.whenGET('/user/rootTasks')
+    $http.get('testdata/tasks.json').success(function(tasks)
+    {
+      var task1Path = encodeURIComponent('/Task1');
+      var task2Path = encodeURIComponent('/Task2');
+      var taskInfoURI = '/user/taskInfo?taskPath=';
+      var rootPath= encodeURIComponent('/');
+
+      $httpBackend.whenGET('/user/subTasks?taskPath='+rootPath)
       .respond( tasks );
-      $httpBackend.whenGET(task1URI).respond( tasks[0] );
-      $httpBackend.whenGET(task2URI).respond( tasks[1] );
-      $httpBackend.whenPOST(RegExp(task1URI+'|'+task2URI).respond(
+      $httpBackend.whenGET(taskInfoURI+task1Path).respond( tasks[0] );
+      $httpBackend.whenGET(taskInfoURI+task2Path).respond( tasks[1] );
+
+      $httpBackend.whenPOST('/user/taskBasic?taskPath='+task1Path).respond(
         function(method, url, task) {
-          var isPost = false;
-          for(var i=0;i<tasks.length;++i) {
-            if(tasks[i].name === task.name) {
-              isPost = true;
-              tasks[i] = task;
-              break;
-            }
+          var changeTask = tasks[0];
+          for(var prop in task) {
+            changeTask[prop] = task[prop];
           }
-          if(!isPost)
-            tasks.push(task);
           return [200];
       });
-
-      $httpBackend.whenDELETE(task1URI)
+      $httpBackend.whenPOST('/user/taskBasic?taskPath='+task2Path).respond(
+        function(method, url, task) {
+          var changeTask = tasks[1];
+          for(var prop in task) {
+            changeTask[prop] = task[prop];
+          }
+          return [200];
+      });
+      $httpBackend.whenPOST('/user/taskDetail?taskPath='+task1Path).respond(
+      function(method, url, text) {
+        tasks[0].detail = text;
+        return [200];
+       });
+      $httpBackend.whenPOST('/user/taskDetail?taskPath='+task2Path).respond(
+      function(method, url, text) {
+        tasks[1].detail = text;
+        return [200];
+       });
     });
 
   });

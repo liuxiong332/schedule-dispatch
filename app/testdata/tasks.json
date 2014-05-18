@@ -1,64 +1,64 @@
 [
   {
-    name: 'Task1',
-    overview: 'The Task for Test, the first one',
-    beginDate: 'December 17, 1995',
-    endDate: 'December 17, 1995',
-    detail: '### Task1\nThe Task for Test, the first one',
-    subTasks: [
+    "name": "Task1",
+    "overview": "The Task for Test, the first one",
+    "beginDate": "December 17, 1995",
+    "endDate": "December 17, 1995",
+    "detail": "### Task1\nThe Task for Test, the first one",
+    "subTasks": [
       {
-        name: 'Task1.Task1',
-        overview: 'sub task of Task1 '
+        "name": "Task1.Task1",
+        "overview": "sub task of Task1"
       }
       {
-        name: 'Task1.Task2',
-        overview: 'sub task of Task2 '
+        "name": "Task1.Task2",
+        "overview": "sub task of Task2 "
       }
     ],
-    progressList: [
+    "progressList": [
       {
-        name: 'progress1',
-        date: 'December 17, 1995',
-        rate: 0.5,
-        content: 'complete the progress 1'
+        "name": "progress1",
+        "date": "December 17, 1995",
+        "rate": 50,
+        "content": "complete the progress 1"
       },
       {
-        name: 'progress2',
-        date: 'December 17, 1995',
-        rate: 0.8,
-        content: 'complete the progress 2'
+        "name": "progress2",
+        "date": "December 17, 1995",
+        "rate": 80,
+        "content": "complete the progress 2"
       }
     ]
   },
 
   {
-    name: 'Task2',
-    overview: 'The Task for Test, the second one',
-    beginDate: 'December 17, 1995',
-    endDate: 'December 17, 1995',
-    detail: '### Task2\nThe Task for Test, the second one',
-    subTasks: [
+    "name": "Task2",
+    "overview": "The Task for Test, the second one",
+    "beginDate": "December 17, 1995",
+    "endDate": "December 17, 1995",
+    "detail": "### Task2\nThe Task for Test, the second one",
+    "subTasks": [
       {
-        name: 'Task2.Task1',
-        overview: 'sub task of Task1 '
+        "name": "Task2.Task1",
+        "overview": "sub task of Task1 "
       }
       {
-        name: 'Task2.Task2',
-        overview: 'sub task of Task2 '
+        "name": "Task2.Task2",
+        "overview: sub task of Task2 "
       }
     ],
-    progressList: [
+    "progressList": [
       {
-        name: 'progress1',
-        date: 'December 17, 1995',
-        rate: 0.5,
-        content: 'complete the progress 1'
+        "name": "progress1",
+        "date": "December 17, 1995",
+        "rate": 50,
+        "content": "complete the progress 1"
       },
       {
-        name: 'progress2',
-        date: 'December 17, 1995',
-        rate: 0.8,
-        content: 'complete the progress 2'
+        "name": "progress2",
+        "date": "December 17, 1995",
+        "rate": 80,
+        "content": "complete the progress 2"
       }
     ]
   }

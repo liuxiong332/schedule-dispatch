@@ -62,21 +62,18 @@ angular.module('myApp.controllers', ['ngCookies'])
       });
     };
   }])
-  .controller('tasklistControl', ['$scope', '$stateParams', '$state',
-    'currentUrl', function($scope, $stateParams, $state, currentUrl) {
+  .controller('tasklistControl',
+    ['$scope', 'TaskInfo', '$stateParams', '$state', 'currentUrl',
+    function($scope, TaskInfo, $stateParams, $state, currentUrl) {
     $scope.user = $stateParams.user;
     $scope.stateParams = $stateParams;
 
-    function TaskDate() {
-      this.content = new Date();
-      this.isInEdit = false;
-      this.isOpen = false;
-    }
-    TaskDate.prototype.onPopupDatePicker = function($event) {
-      $event.stopPropagation();
-      $event.preventDefault();
-      this.isOpen = true;
-    };
+    var taskPath = $stateParams.path;
+    if(taskPath[0] === '/')   taskPath = '/' + taskPath;
+    TaskInfo.get({user: $stateParams.user, taskPath: taskPath},
+    function(task) {
+      $scope.task = task;
+    });
 
     $scope.getSubTaskUrl = function(name) {
       return currentUrl+name+'/';
@@ -85,15 +82,6 @@ angular.module('myApp.controllers', ['ngCookies'])
       $event.preventDefault();
       $event.stopPropagation();
       $state.go('newTask', $stateParams);
-    };
-    $scope.overview = {
-      isInEdit: false,
-      content: '如果你是，赶紧使用吧，从现在开始规划自己的人生！'
-    };
-    $scope.beginDate = new TaskDate();
-    $scope.endDate = new TaskDate();
-    $scope.detail = {
-      content: '* 要点一\n* 要点二\n* 要点三\n\n[链接](#)\n'
     };
 
     function Progress(name, date, content) {
